@@ -1,0 +1,41 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+<MapView Style="height: 600px; width: 100%;" Latitude="_lat" Longitude="_lon">
+    <Map ArcGISDefaultBasemap="arcgis-navigation">
+        <GraphicsLayer @ref="_graphicsLayer">
+            <Graphic>
+                <Point Longitude="_lon" Latitude="_lat" />
+                <PictureMarkerSymbol Url="/images/marker.svg" />
+            </Graphic>
+            <Graphic Attributes="_graphicAttributes">
+                <Polygon Rings="@(new[] { new MapPath(_mapRings)})" />
+                <SimpleFillSymbol Color="@(new MapColor(81, 46, 132, 0.8))">
+                    <Outline Color="@(new MapColor(255, 255, 255))" Width="1" />
+                </SimpleFillSymbol>
+            </Graphic>
+        </GraphicsLayer>
+    </Map>
+</MapView>
+
+@code
+{
+    private GraphicsLayer? _graphicsLayer;
+    private double _lon = -118.805;
+    private double _lat = 34.027;
+    private MapPoint[] _mapRings = new[]
+    {
+        new MapPoint(-118.805, 34.027),
+        new MapPoint(-118.805, 34.027),
+        new MapPoint(-118.805, 34.027),
+        new MapPoint(-118.805, 34.027),
+        new MapPoint(-118.805, 34.027)
+    };
+    private Dictionary<string, object> _graphicAttributes = new Dictionary<string, object>
+    {
+        { "name", "My Polygon" }
+    };
+}
